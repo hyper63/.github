@@ -3,11 +3,12 @@ name: Tag and Release
 on:
   workflow_dispatch:
     inputs:
+      # If not using a monorepo, this input can be removed
       package:
         description: the package name to use as prefix to tag
         required: false
       version:
-        description: the server version to bump to
+        description: the semver version to bump to
         required: true
       runtime:
         description: 'the runtime of the package. node or deno (default: deno)'
@@ -18,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          # Allows for pushes from this workflow to trigger subsequent workflows 
+          token: ${{ secrets.CI_GITHUB_TOKEN }} 
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
@@ -27,7 +31,7 @@ jobs:
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
       - name: bump
         id: bump
-        uses: hyper/hyper-ci-bump
+        uses: hyper63/hyper-ci-bump@main
         with:
           bump-to: ${{github.event.inputs.version}}
           package: ${{github.event.inputs.package}}
