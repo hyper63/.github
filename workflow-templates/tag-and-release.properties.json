@@ -1,0 +1,9 @@
+{
+  "name": "Tag and Release",
+  "description": "Tag and release a library or app using hyper conventions",
+  "iconName": "bolt",
+  "filePatterns": [
+    "package.json$",
+    "egg.json$"
+  ]
+}
