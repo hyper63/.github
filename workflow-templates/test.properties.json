@@ -1,0 +1,8 @@
+{
+  "name": "Test",
+  "description": "Install Deno, and run test script using hyper conventions",
+  "iconName": "bolt",
+  "filePatterns": [
+    "egg.json$"
+  ]
+}
