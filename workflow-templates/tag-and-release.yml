@@ -10,9 +10,6 @@ on:
       version:
         description: the semver version to bump to
         required: true
-      runtime:
-        description: 'the runtime of the package. node or deno (default: deno)'
-        required: false
 
 jobs:
   release:
@@ -35,7 +32,8 @@ jobs:
         with:
           bump-to: ${{github.event.inputs.version}}
           package: ${{github.event.inputs.package}}
-          runtime: ${{github.event.inputs.runtime}}
+          # set to 'node' to bump node manifest files ie. package.json and package-lock.json
+          runtime: deno
       - name: push
         run: |
           git push --follow-tags
