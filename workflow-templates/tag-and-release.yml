@@ -3,10 +3,7 @@ name: Tag and Release
 on:
   workflow_dispatch:
     inputs:
-      # If not using a monorepo, this input can be removed
-      package:
-        description: the package name to use as prefix to tag
-        required: false
+    # See https://github.com/hyper63/hyper-ci-bump#inputs for available inputs for the bump action
       version:
         description: the semver version to bump to
         required: true
@@ -32,6 +29,7 @@ jobs:
         with:
           bump-to: ${{github.event.inputs.version}}
           package: ${{github.event.inputs.package}}
+          prefix: ${{github.event.inputs.prefix}}
           # set to 'node' to bump node manifest files ie. package.json and package-lock.json
           runtime: deno
       - name: push
