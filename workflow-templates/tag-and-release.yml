@@ -5,20 +5,22 @@ on:
     inputs:
     # See https://github.com/hyper63/hyper-ci-bump#inputs for available inputs for the bump action
       version:
-        description: the semver version to bump to
+        description: the semver version to bump to ('semver' to bump based on commits)
         required: true
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # Allows for pushes from this workflow to trigger subsequent workflows 
-          token: ${{ secrets.CI_GITHUB_TOKEN }} 
+          token: ${{ secrets.CI_GITHUB_TOKEN }}
+          # 0 means pull down all history, so all tags can be grep'd
+          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: set git user
         run: |
           git config --global user.name "${{ github.actor }}"
